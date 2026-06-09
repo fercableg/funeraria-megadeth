@@ -7,6 +7,16 @@ if (isset($_SESSION['user_id'])){
     header("Location: ../../dashboard/");
     exit(); //siempre que haya un redireccionamiento
 }
+$msgError = '';
+try {
+  if (isset($_SESSION['error']['login'])){
+    $msgError = $_SESSION['error']['login'];
+  }else{
+    $msgError = 0;
+  }
+} catch (\Throwable $th) {
+  $msgError = 'exception';
+}
 ?>
 
 <!doctype html>
@@ -84,8 +94,21 @@ if (isset($_SESSION['user_id'])){
       <div class="card">
         <div class="card-body login-card-body">
           <p class="login-box-msg">¡Hola! Ingresa tus credenciales</p>
-
-          <form action="validate/" method="post">
+          <?php if ($msgError != 0){ ?>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>¡Error 1!</strong> <?php echo $msgError; ?>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          <?php } ?>
+          <?php
+          if ($msgError != 0) {
+            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+            echo '  <strong>¡Error 2!</strong> ' . $msgError;
+            echo '  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+            echo '</div>';
+          }
+          ?>
+          <form action="auth/" method="post">
             <div class="input-group mb-3">
               <input type="email" class="form-control" placeholder="Ingrese su email" name="username" id="username" />
               <div class="input-group-text">

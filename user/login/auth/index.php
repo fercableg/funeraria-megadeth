@@ -18,8 +18,9 @@ if ($user === $formUsername && $pass === $formPassword){
     $_SESSION['user_id'] = 1;
     $_SESSION['user_name'] = 'Profe :)';
 
-    header("Location: ../../../dashboard/");
+    header("Location: ../../../backoffice/");
     exit();
 }
 
-echo 'user y pass malos...';
+$_SESSION['error'] = ['login' => 'Usuario o contraseña incorrectos'];
+header("Location: ../");

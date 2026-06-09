@@ -1,0 +1,2 @@
+info del dashboard
+
