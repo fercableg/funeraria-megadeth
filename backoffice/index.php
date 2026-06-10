@@ -7,15 +7,20 @@ if (!isset($_SESSION['user_id'])){
   header("Location: ../user/login/");
   exit();
   }
-?>
 
+  $ruta = ['assets' => '../', 'components' => ''];
+  $_SESSION['ruta'] = $ruta;
+  $_SESSION['titulos'] = ['webTitle' => 'Programación Web en PHP con AdminLTE'];
+
+?>
 
 <!doctype html>
 <html lang="es">
   <!--begin::Head-->
+
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Programación Web en PHP con AdminLTE</title>
+    <title><?php echo $_SESSION['titulos']['webTitle'] ?></title>
 
     <!--begin::Accessibility Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
@@ -50,24 +55,21 @@ if (!isset($_SESSION['user_id'])){
       integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q="
       crossorigin="anonymous"
       media="print"
-      onload="this.media = 'all'"
-    />
+      onload="this.media = 'all'" />
     <!--end::Fonts-->
 
     <!--begin::Third Party Plugin(OverlayScrollbars)-->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css"
-      crossorigin="anonymous"
-    />
+      crossorigin="anonymous" />
     <!--end::Third Party Plugin(OverlayScrollbars)-->
 
     <!--begin::Third Party Plugin(Bootstrap Icons)-->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
-      crossorigin="anonymous"
-    />
+      crossorigin="anonymous" />
     <!--end::Third Party Plugin(Bootstrap Icons)-->
 
     <!--begin::Required Plugin(AdminLTE)-->

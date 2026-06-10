@@ -18,6 +18,8 @@ if ($user === $formUsername && $pass === $formPassword){
     $_SESSION['user_id'] = 1;
     $_SESSION['user_name'] = 'Profe :)';
 
+    $_SESSION['error'] = ['login' => ''];
+
     header("Location: ../../../backoffice/");
     exit();
 }
