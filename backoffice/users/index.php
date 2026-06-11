@@ -1,12 +1,16 @@
 <?php
 
-session_start();
-
 $ruta = ['assets' => '../../', 'components' => '../'];
 $_SESSION['ruta'] = $ruta;
 
-?>
+//para los datos
+include_once '../mvc/v1/conexion.php';
+include_once '../mvc/v1/models/usuario.php';
 
+$modelo = new Usuario();
+$data = $modelo->getAll();
+
+?>
 <!doctype html>
 <html lang="es">
   <!--begin::Head-->
@@ -115,7 +119,11 @@ $_SESSION['ruta'] = $ruta;
               <!--begin::Col-->
               <div class="col-12">
 
-                <?php if (count($_SESSION['errores']['items'] ?? []) > 0) {    
+                <?php 
+                try {
+                  //code...
+                
+                if (count($_SESSION['errores']['items'] ?? []) > 0) {    
                     if (($_SESSION['errores']['items']['email'])) { ?>
                       <div class="alert alert-danger alert-dismissible fade show" role="alert">
                           <strong>Error Email:</strong> <?php echo $_SESSION['errores']['items']['email']; ?>
@@ -129,7 +137,10 @@ $_SESSION['ruta'] = $ruta;
                       </div>
                 <?php 
                     }
-                } ?>
+                } 
+                } catch (\Throwable $th) {
+                  //throw $th;
+                }?>
 
               </div>
               <!--end::Col-->
@@ -153,12 +164,15 @@ $_SESSION['ruta'] = $ruta;
                           <th style="width: 40px" scope="col">Acciones</th>
                         </tr>
                       </thead>
+                      <?php if (count($data) > 0) { $num = 1 ?>
                       <tbody>
+                        <?php foreach ($data as $registro) { ?>
+                        
                         <tr class="align-middle">
-                          <td>1.</td>
-                          <td>Benjamín Gómez</td>
+                          <td><?php echo $num; ?></td>
+                          <td><?php echo $registro->getNombre() . ' ' . $registro->getApellido(); ?></td>
                           <td>
-                            <span class="badge text-bg-success">Activo</span>
+                            <span class="badge text-bg-<?php echo $registro->isActivo() == 1 ? 'success' : 'danger' ?>"><?php echo $registro->isActivo() == 1 ? 'Activado' : 'Desactivado' ?></span>
                           </td>
                           <td><div class="btn-group">
                           <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -173,36 +187,27 @@ $_SESSION['ruta'] = $ruta;
                               <a class="dropdown-item" href="#">Apagar</a>
                             </li>
                             <li>
-                              <a class="dropdown-item" href="#">Encender</a>
+                              <form action="./powerOn/" method="post">
+                                <input type="text" class="d-none" name="id" value="<?php echo md5($registro->getId()) ?>">
+                                <button type="submit" class="dropdown-item">Encender</button>
+                              </form>
+                              <a class="dropdown-item" href="powerOn">Encender LINK</a>
                             </li>
                           </ul>
                           </div></td>
                         </tr>
-                        <tr class="align-middle">
-                          <td>2.</td>
-                          <td>Samuel Hayden</td>
-                          <td>
-                            <span class="badge text-bg-success">Activo</span>
-                          </td>
-                          <td><div class="btn-group">
-                          <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class=" bi bi-list"></i>
-                          </button>
-                          <ul class="dropdown-menu" style="">
-                            <li><a class="dropdown-item" href="#">Ver</a></li>
-                            <li>
-                              <a class="dropdown-item" href="#">Editar</a>
-                            </li>
-                            <li>
-                              <a class="dropdown-item" href="#">Apagar</a>
-                            </li>
-                            <li>
-                              <a class="dropdown-item" href="#">Encender</a>
-                            </li>
-                          </ul>
-                          </div></td>
-                        </tr>
+                        <?php
+                            $num++;
+                        }
+                        ?>
                       </tbody>
+                      <?php } else { ?>
+                          <tbody>
+                            <tr class="align-middle">
+                              <td colspan ="4" class="text-center">Sin Datos en la Base de Datos</td>
+                            </tr>
+                          </tbody>
+                      <?php } ?>
                     </table>
                   </div>
                   <!--end::Body-->

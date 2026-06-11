@@ -1,6 +1,7 @@
 <?php
 
-class Conexion{
+class Conexion
+{
     private $connection;
     private $host;
     private $username;
@@ -20,7 +21,8 @@ class Conexion{
         $this->password = 'h0l4.mund0.2026';
     }
 
-    public function getConnection(){
+    public function getConnection()
+    {
         try{
                 $this->connection = mysqli_connect($this->host, $this->username, $this->password, $this->bd, $this->port);
                 mysqli_set_charset($this->connection, 'utf8'); //ñá¿
@@ -44,13 +46,3 @@ class Conexion{
     }
 
 }
-
-$conexion = new Conexion();
-
-echo '<pre>';
-print_r($_SERVER['SERVER_NAME']);
-echo '<hr>';
-$con = $conexion->getConnection();
-$conexion->closeConnection();
-print_r($con);
-echo '</pre>';

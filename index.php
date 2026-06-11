@@ -14,6 +14,5 @@ if (isset($_SESSION['user_id'])){
 } else{
     //si no hay SESSION es porque no hay usuario
     header("Location: user/login");
-    exit();
+    exit(); //siempre que haya un redireccionamiento
 }
-?>
