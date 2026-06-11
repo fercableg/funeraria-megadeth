@@ -183,16 +183,25 @@ $data = $modelo->getAll();
                             <li>
                               <a class="dropdown-item" href="#">Editar</a>
                             </li>
+                            <?php if ($registro->isActivo() == 1) { ?>
+
                             <li>
-                              <a class="dropdown-item" href="#">Apagar</a>
+                              <form action="./powerOff/" method="post">
+                                <input type="text" class="d-none" name="id" value="<?php echo $registro->getId() ?>">
+                                <button type="submit" class="dropdown-item">Apagar</button>
+                              </form>
+                              <!--a class="dropdown-item" href="./powerOff/">Apagar LINK</a-->
                             </li>
+                            <?php } ?>
+                            <?php if ($registro->isActivo() == 0) { ?>
                             <li>
                               <form action="./powerOn/" method="post">
-                                <input type="text" class="d-none" name="id" value="<?php echo md5($registro->getId()) ?>">
+                                <input type="text" class="d-none" name="id" value="<?php echo $registro->getId() ?>">
                                 <button type="submit" class="dropdown-item">Encender</button>
                               </form>
-                              <a class="dropdown-item" href="powerOn">Encender LINK</a>
+                              <!--a class="dropdown-item" href="powerOn">Encender LINK</a-->
                             </li>
+                            <?php } ?>
                           </ul>
                           </div></td>
                         </tr>

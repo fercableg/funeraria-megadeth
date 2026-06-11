@@ -136,4 +136,45 @@ class Usuario
         $con->closeConnection();
         return $lista;
     }
+
+    public function powerOn($_id) {
+        $con = new Conexion();
+        try {
+            $query = "UPDATE usuario SET active = 1 WHERE id = ?";
+            $stmt = $con->getConnection()->prepare($query);
+            $stmt->bind_param(
+                "s",
+                $_id
+            );
+            var_dump($stmt);
+            $rs = $stmt->execute();
+            $stmt->close();
+            $con->closeConnection();
+
+            return $rs ? true : false;
+        } catch (\Throwable $th) {
+            echo $th->getMessage();
+            return false;
+        }
+    }
+    public function powerOff($_id) {
+        $con = new Conexion();
+        try {
+            $query = "UPDATE usuario SET active = 0 WHERE id = ?";
+            $stmt = $con->getConnection()->prepare($query);
+            $stmt->bind_param(
+                "s",
+                $_id
+            );
+            var_dump($stmt);
+            $rs = $stmt->execute();
+            $stmt->close();
+            $con->closeConnection();
+
+            return $rs ? true : false;
+        } catch (\Throwable $th) {
+            echo $th->getMessage();
+            return false;
+        }
+    }
 }

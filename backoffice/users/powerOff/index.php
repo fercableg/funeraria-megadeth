@@ -10,9 +10,9 @@ echo 'Encender<br>';
 
 var_dump($_POST['id']);
 
-echo 'Respuesta: ' . $modelo->powerOn($_POST['id']);
+echo 'Respuesta: ' . $modelo->powerOff($_POST['id']);
 
-$_SESSION['ok']['msg'] = 'Se encendió exitosamente :).';
+$_SESSION['ok']['msg'] = 'Se apagó exitosamente :).';
 echo $_SESSION['ok']['msg'];
 header("Location: ../");
 exit();
